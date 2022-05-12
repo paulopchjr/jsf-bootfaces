@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui = "http://java.sun.com/jsf/facelets">
+	
+	
+<h:head>
+	<title>Módulo 27 jsf- bootfaces + JPA+ CDI - LANÇAMENTO</title>
+
+</h:head>
+
+<h:body>
+
+	<ui:include src="/menu.xhtml"></ui:include>
+
+	<h:form id="formLancamento">
+			
+				<h:panelGrid columns="2">
+					<f:facet name="header">
+						<h:outputText value="Lançamentos de Notas"/>
+					</f:facet>
+					<h:outputLabel value="ID:"/>
+					<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true"/>
+					<h:outputLabel value="Nota:"/>
+					<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}"/>
+					<h:outputLabel value="Empresa Origem:"/>
+					<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}"/>
+					<h:outputLabel value="Destino:"/>
+					<h:inputText value="#{lancamentoBean.lancamento.empresaDestino}"/>
+					<h:outputLabel/>
+					
+					<h:panelGroup>
+				<h:commandButton value="Novo" action="#{lancamentoBean.novo}" image="/resources/img/novo-usuario.png" title="Novo"></h:commandButton>
+				<h:commandButton value="Salvar"	action="#{lancamentoBean.salvar}" image="/resources/img/salve-.png" title="Salvar" style="margin-left:1cm;"></h:commandButton>
+				<h:commandButton value="Excluir" action="#{lancamentoBean.remove}" image="/resources/img/delete.png" title="Excluir" style="margin-left:1cm;"  rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}"></h:commandButton>
+				<h:commandButton value="Limpar Formulario" type="reset"	image="/resources/img/reset.png" title="Limpar" style="margin-left:1cm;"></h:commandButton>
+
+			</h:panelGroup>
+				</h:panelGrid>
+				
+				<h:dataTable value="#{lancamentoBean.listaLancamentos}" var ="l" border="3" cellpadding="6">
+					<f:facet name="header">
+						Lista de Usuários Cadastrados
+					</f:facet>
+					<h:column>
+						<f:facet name="header">ID</f:facet>
+						<h:outputText value="#{l.id}"/>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Nº Nota</f:facet>
+						<h:outputText value="#{l.numeroNotaFiscal}"/>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Empresa Destino</f:facet>
+						<h:outputText value="#{l.empresaOrigem}"/>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Empresa Destino</f:facet>
+						<h:outputText value="#{l.empresaDestino}"/>
+					</h:column>
+					<h:column  rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
+						<f:facet name="header">Usuário</f:facet>
+						<h:outputText value="#{l.usuario.nome}"/>
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">Editar</f:facet>
+							<h:commandLink title="Editar">
+								<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}"></f:setPropertyActionListener>
+								<h:graphicImage value="/resources/img/caneta.png"></h:graphicImage>
+							</h:commandLink>
+					</h:column>
+					
+					
+					<h:column  rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
+							<f:facet name="header">Excluir</f:facet>
+								<h:commandLink action="#{lancamentoBean.remove}" title="Excluir">
+									<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}"></f:setPropertyActionListener>
+					<h:graphicImage value="/resources/img/excluir.png"></h:graphicImage>
+								</h:commandLink>
+					</h:column>
+					
+				
+					
+				</h:dataTable>
+	</h:form>
+
+</h:body>
+</html>
